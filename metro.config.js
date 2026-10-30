@@ -6,6 +6,8 @@ const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
  *
  * @type {import('@react-native/metro-config').MetroConfig}
  */
-const config = {};
+// Fall back to Metro's Node crawler on managed machines where Watchman cannot
+// create its user-level LaunchAgent.
+const config = { resolver: { useWatchman: false } };
 
 module.exports = mergeConfig(getDefaultConfig(__dirname), config);

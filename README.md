@@ -1,97 +1,66 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Daily Drive
 
-# Getting Started
+**Same Route. Shared Ride.**
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+Daily Drive is a React Native MVP prototype for commuters sharing an existing daily route and its fuel costs. The app is a local, offline-friendly presentation demo: it uses sample Lahore commuter data, in-memory state, and native confirmation dialogs. It does not connect to a backend, payment service, maps provider, identity service, or emergency service.
 
-## Step 1: Start Metro
+## Run the demo
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+### Requirements
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- Node.js `>= 22.11.0`
+- npm dependencies installed with `npm install`
+- React Native Android or iOS development environment configured
+- Android emulator/device, or iOS Simulator (macOS with Xcode)
+
+### Start Metro
 
 ```sh
-# Using npm
 npm start
-
-# OR using Yarn
-yarn start
 ```
 
-## Step 2: Build and run your app
+### Launch Android
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
+With an Android emulator open or a device connected:
 
 ```sh
-# Using npm
 npm run android
-
-# OR using Yarn
-yarn android
 ```
 
-### iOS
+### Launch iOS
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+On macOS with Xcode configured:
 
 ```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+The app opens on a short splash screen, then onboarding. Choose **Get Started**, then **Continue as Demo User** to enter the app without credentials. The demo account is Salman Nawaz, with a Johar Town → Gulberg weekday route. You can also open the signup form and choose a city from the local city list.
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## Demo journeys
 
-## Step 3: Modify your app
+- **Find a commute:** Home → Find a Ride → edit pickup, destination, and time → Find Matches → open a commuter profile → Request to Join.
+- **Offer a commute:** Home → Offer a Ride → Publish My Route → browse matching demo commuters.
+- **Requests and rides:** Home shortcuts open ride requests, request status, and ride history. Incoming requests can be accepted or declined.
+- **Messages:** Open Messages or a commuter profile to view the sample conversation and send local messages.
+- **Safety and costs:** Open Safety Center for demo-only actions, or Fuel Cost Calculator to calculate monthly fuel cost and per-person share.
 
-Now that you have successfully run the app, let's make changes!
+## Technical notes
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+- React Native `0.87.1` with TypeScript; no extra runtime dependencies or API keys are required.
+- `App.tsx` is the app entry point. `src/navigation/AppNavigator.tsx` owns the demo navigation and shared session state.
+- Every major journey screen has its own module in `src/screens/` (onboarding, authentication, home, find, matches, offer, profile, rides, requests, chat, messages, safety, fuel calculator, and notifications).
+- Reusable controls and layout are in `src/components/`; sample users and notifications live in `src/data/mockData.ts`; design tokens live in `src/theme.ts`.
+- Navigation and presentation state are local; app data resets when the process restarts.
+- The route illustration is a styled placeholder rather than a live map.
+- Match percentages and cost contributions are illustrative demo values.
+- SOS, verification badges, and identity details are mock presentation content. No real alert is sent and no identity check is performed.
+- The native React Native module name remains `Ride` so it matches Android/iOS registration; the visible Android and iOS app names are **Daily Drive**.
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## Validation
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+Run the TypeScript check with:
 
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+```sh
+npx tsc --noEmit
+```
